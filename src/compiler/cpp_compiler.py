@@ -1,4 +1,6 @@
 import subprocess
+from src.constants.table_constants import TEST_CASE_OUTPUT_COLUMNS
+from src.cli.log import Log
 
 from src.compiler.compiler import Compiler
 
@@ -21,7 +23,7 @@ class CPPCompiler(Compiler):
         for sample_input in self.samples["input"]:
             sample_input = "".join(sample_input).strip()
 
-            with open("output.txt", "r+") as output_file:
+            with open("output.txt", "w") as output_file:
                 subprocess.run(
                     "./" + self.executable_file,
                     check=True,
@@ -30,10 +32,24 @@ class CPPCompiler(Compiler):
                     stderr=subprocess.PIPE,
                 )
 
-                output_file.seek(0)
+            with open("output.txt", "r") as output_file:
                 user_outputs.append(output_file.read())
 
         self.user_outputs = user_outputs
 
     def test_samples_with_user_output(self):
-        print(self.samples["output"], self.user_outputs)
+        test_cases = len(self.samples["input"])
+        test_case_indices = []
+        test_case_results = []
+        sample_inputs = []
+        sample_outputs = []
+
+        for test_index in range(test_cases):
+            test_case_indices.append(test_index + 1)
+            sample_output = "".join(self.samples["output"][test_index])
+            sample_inputs.append("".join(self.samples["input"][test_index]))
+            sample_outputs.append(sample_output)
+            test_case_results.append("AC" if sample_output == self.user_outputs[test_index] else "WA")
+
+        rows = zip(test_case_indices, sample_inputs, sample_outputs, self.user_outputs, test_case_results)
+        Log.log_custom_table(TEST_CASE_OUTPUT_COLUMNS, rows, testing=True)
