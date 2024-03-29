@@ -1,25 +1,27 @@
-class Compiler:
+from abc import ABC, abstractmethod
+
+
+class Compiler(ABC):
     def __init__(self):
+        self.file = ""
+        self.extension = ""
+        self.filename = ""
+        self.filepath = ""
+        self.user_outputs = None
+        self.samples = None
         self.test_cases_passed = 0
 
-    def compile(self, extension):
-        match extension:
-            case "cpp":
-                ...
-            case _:
-                print("Invalid filetype")
+    @abstractmethod
+    def compile(self):
+        pass
 
-    def run_samples(self, samples):
-        extension = ...
-        self.compile(extension)
+    @abstractmethod
+    def get_program_output(self):
+        pass
 
-        # After compiling, we get the output of the user's answers through an output file
-        # Next we compare the test case output with the user's outputs
+    def set_file(self, file):
+        self.file = file
+        self.filename, self.extension = file.split(".")
 
-    def compare_test_case_and_user_output(self, test_case_output):
-        ...
-
-        user_output = "lol"
-
-        if user_output == test_case_output:
-            self.test_cases_passed
+    def set_samples(self, samples):
+        self.samples = samples

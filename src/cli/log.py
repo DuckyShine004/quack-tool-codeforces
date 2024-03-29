@@ -12,3 +12,7 @@ class Log:
         table.add_row(test_case_output)
 
         print(table)
+
+    @staticmethod
+    def log_compiler_options():
+        pass
