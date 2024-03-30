@@ -1,4 +1,5 @@
 {
     "reportAttributeAccessIssue": false,
     "reportArgumentType": false,
+    "reportReturnType": false,
 }

@@ -1,3 +1,10 @@
+"""This module defines argument constants.
+
+Attributes:
+    ARGUMENT_FLAGS (Dict): Argument flags. The user flags must match any of the argument flags.
+    URL_PREFIX (str): The URL for Codeforces.
+"""
+
 URL_PREFIX = "https://codeforces.com"
 
 ARGUMENT_FLAGS = {
