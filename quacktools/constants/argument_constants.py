@@ -1,6 +1,5 @@
 URL_PREFIX = "https://codeforces.com"
 
-
 ARGUMENT_FLAGS = {
     "-t": {
         "dest": "file",

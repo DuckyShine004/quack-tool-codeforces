@@ -1,3 +1,4 @@
+from re import L
 from quacktools.compiler.cpp_compiler import CPPCompiler
 from quacktools.utilities.utility import Utility
 
@@ -23,9 +24,13 @@ class App:
         return self.arguments.contest
 
     def get_url(self):
-        url = URL_PREFIX + ("/contest" if self.arguments.contest is not None else "/problem")
-        return "https://codeforces.com/problemset/problem/1950/F"
-        return url + f"/{self.get_problem_number()}/{self.arguments.difficulty}"
+        problem_number = self.get_problem_number()
+        difficulty = self.arguments.difficulty
+
+        if self.arguments.contest is not None:
+            return URL_PREFIX + f"/contest/{problem_number}/problem/{difficulty}"
+
+        return URL_PREFIX + f"/problemset/problem/{problem_number}/{difficulty}"
 
     def get_compiler(self):
         extension = self.arguments.file.split(".")[1]
