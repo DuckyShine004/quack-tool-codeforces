@@ -42,16 +42,6 @@ options:
   -p PROBLEM     What is the problem number, e.g. 1950.
   -c CONTEST     What is the contest number, e.g. 1950.
   -d DIFFICULTY
-❯ quack -h
-usage: quack [-h] [-t FILE] [-p PROBLEM] [-c CONTEST] [-d DIFFICULTY]
-
-options:
-  -h, --help     show this help message and exit
-  -t FILE        Test your file against a problem from a problem set, or a
-                 problem from a contest.
-  -p PROBLEM     What is the problem number, e.g. 1950.
-  -c CONTEST     What is the contest number, e.g. 1950.
-  -d DIFFICULTY
 ```
 #### Detailed Usage
 
