@@ -22,7 +22,7 @@ class Utility:
     def get_samples(url):
         samples = defaultdict(list)
 
-        request = requests.get(url)
+        request = requests.get(url, timeout=5)
         url_data = BeautifulSoup(request.text, "html.parser")
         input_divs = url_data.find_all(class_="input")
         output_divs = url_data.find_all(class_="output")

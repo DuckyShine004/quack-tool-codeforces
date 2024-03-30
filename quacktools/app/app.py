@@ -1,5 +1,7 @@
 import sys
 
+from typing import TYPE_CHECKING
+
 from quacktools.compiler.cpp_compiler import CPPCompiler
 from quacktools.utilities.utility import Utility
 
@@ -8,17 +10,30 @@ from quacktools.exceptions.url_not_valid_error import URLNotValidError
 from quacktools.constants.argument_constants import URL_PREFIX
 
 
+if TYPE_CHECKING:
+    from quacktools.compiler.compiler import Compiler
+
+
 class App:
     def __init__(self):
         self.arguments = Utility.get_arguments()
-        self.compiler = self.get_compiler()
         self.url = self.get_url()
 
     def run(self):
-        self.compiler.initialize()
-        self.compiler.compile()
-        self.compiler.get_program_output()
-        self.compiler.test_samples_with_user_output()
+        compiler = None
+
+        try:
+            compiler = self.get_compiler()
+        except Exception as e:
+            print(e)
+
+        if compiler is None:
+            sys.exit(0)
+
+        compiler.initialize()
+        compiler.compile()
+        compiler.get_program_output()
+        compiler.test_samples_with_user_output()
 
     def get_problem_number(self):
         if self.arguments.problem is not None:
@@ -56,4 +71,4 @@ class App:
             case "cpp":
                 return CPPCompiler(self)
 
-        return None
+        raise Exception(f"Extension {extension} does not exist")
