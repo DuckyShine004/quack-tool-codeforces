@@ -78,5 +78,13 @@ class Utility:
     def validate_url(url):
         url_not_valid_error = f"'{url}' is not a not a valid URL."
 
-        if not validators.url(url):
+        if not validators.url(url) or not Utility.check_url_exists(url):
             raise URLNotValidError(url_not_valid_error)
+
+    @staticmethod
+    def check_url_exists(url):
+        try:
+            response = requests.head(url, timeout=5)
+            return response.status_code == 200
+        except requests.RequestException:
+            return False
