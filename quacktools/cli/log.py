@@ -1,5 +1,5 @@
 from prettytable import PrettyTable, ALL
-from src.constants.table_constants import TEST_CASE_OUTPUT_COLUMNS
+from quacktools.constants.table_constants import TEST_CASE_OUTPUT_COLUMNS
 
 
 class Log:

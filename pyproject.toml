@@ -1,3 +1,31 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[metadata]
+name = "quacktools"
+version = "0.1.0"
+
+[tool.setuptools]
+packages = ["quacktools", "quacktools.cli", "quacktools.compiler", "quacktools.constants", "quacktools.utilities"]
+
+[project.scripts]
+quack = "quacktools.main:main"
+
+[project]
+name = "quacktools"
+version = "0.1.0"
+description = "A brief description of your package"
+authors = [{ name = "Gallon Zhou", email = "gallonzhou04@gmail.com" }]
+# license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
 [tool.black]
 line-length = 120
 target-version = ['py310']
@@ -7,6 +35,7 @@ extend-exclude = '''
 # in the root of the project.
 ^/foo.py  # exclude a file named foo.py in the root of the project (in addition to the defaults)
 '''
+
 [tool.pylint."MESSAGES CONTROL"]
 disable = [
   "no-member",

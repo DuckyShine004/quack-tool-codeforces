@@ -1,8 +1,8 @@
 import subprocess
-from src.constants.table_constants import TEST_CASE_OUTPUT_COLUMNS
-from src.cli.log import Log
+from quacktools.constants.table_constants import TEST_CASE_OUTPUT_COLUMNS
+from quacktools.cli.log import Log
 
-from src.compiler.compiler import Compiler
+from quacktools.compiler.compiler import Compiler
 
 
 class CPPCompiler(Compiler):

@@ -1,9 +1,9 @@
 import os
 import validators
 
-from src.cli.log import Log
-from src.compiler.cpp_compiler import CPPCompiler
-from src.utilities.utility import Utility
+from quacktools.cli.log import Log
+from quacktools.compiler.cpp_compiler import CPPCompiler
+from quacktools.utilities.utility import Utility
 
 
 class Cli:
