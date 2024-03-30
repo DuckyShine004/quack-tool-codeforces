@@ -1,25 +1,42 @@
+"""The Utility module contains utility methods that are used to extract unrelated logic away from
+existing class members.
+"""
+
+from collections import defaultdict
+
+from typing import List, Dict
+
 import os
 import sys
+import argparse
 import requests
 import validators
 
 from bs4 import BeautifulSoup
-from argparse import ArgumentParser
-from collections import defaultdict
 
 from quacktools.exceptions.missing_argument_error import MissingArgumentError
 from quacktools.exceptions.missing_test_file_error import MissingFileError
 from quacktools.exceptions.missing_difficulty_error import MissingDifficultyError
-from quacktools.exceptions.file_not_found_error import FileNotFoundError
 from quacktools.exceptions.url_not_valid_error import URLNotValidError
 
 from quacktools.constants.argument_constants import ARGUMENT_FLAGS
-from quacktools.constants.exception_constants import MISSING_PROBLEM_TYPE_ERROR
+from quacktools.constants.exception_constants import MISSING_PROBLEM_TYPE_ERROR, FILE_NOT_FOUND_ERROR
 
 
 class Utility:
+    """The Utility instance allows existing class members to access useful functionalities."""
+
     @staticmethod
-    def get_samples(url):
+    def get_samples(url: str) -> Dict[str, List[str]]:
+        """Returns the problem's I/O samples.
+
+        Args:
+            url (str): The input URL.
+
+        Returns:
+            Dict[str, List[str]]: The problem's I/O samples.
+        """
+
         samples = defaultdict(list)
 
         request = requests.get(url, timeout=5)
@@ -38,8 +55,14 @@ class Utility:
         return samples
 
     @staticmethod
-    def get_arguments():
-        parser = ArgumentParser()
+    def get_arguments() -> argparse.Namespace:
+        """Returns validated user arguments.
+
+        Returns:
+            argparse.Namespace: The validated user arguments.
+        """
+
+        parser = argparse.ArgumentParser()
 
         for flag, options in ARGUMENT_FLAGS.items():
             parser.add_argument(flag, **options)
@@ -61,7 +84,19 @@ class Utility:
         return arguments
 
     @staticmethod
-    def validate_arguments(arguments):
+    def validate_arguments(arguments: argparse.Namespace) -> None:
+        """Check if the input arguments are valid. Exceptions will be thrown if arguments are invalid.
+
+        Args:
+            arguments (argparse.Namespace): The input arguments.
+
+        Raises:
+            FileNotFoundError: File is not found in current directory.
+            MissingArgumentError: User did not input problem or contest arguments.
+            MissingDifficultyError: User did not input the difficulty of the problem.
+            MissingFileError: User did not input the name of the file.
+        """
+
         if arguments.problem is None and arguments.contest is None:
             raise MissingArgumentError(MISSING_PROBLEM_TYPE_ERROR)
 
@@ -69,20 +104,36 @@ class Utility:
             raise MissingFileError()
 
         if arguments.file not in os.listdir():
-            raise FileNotFoundError()
+            raise FileNotFoundError(FILE_NOT_FOUND_ERROR)
 
         if arguments.difficulty is None:
             raise MissingDifficultyError()
 
     @staticmethod
-    def validate_url(url):
-        url_not_valid_error = f"'{url}' is not a not a valid URL."
+    def validate_url(url: str) -> None:
+        """Validates the input URL.
+
+        Args:
+            url (str): The input URL.
+
+        Raises:
+            URLNotValidError: Thrown if URL is not valid.
+        """
 
         if not validators.url(url) or not Utility.check_url_exists(url):
-            raise URLNotValidError(url_not_valid_error)
+            raise URLNotValidError(url)
 
     @staticmethod
-    def check_url_exists(url):
+    def check_url_exists(url: str) -> bool:
+        """Return a boolean value based on whether the URL is valid or not.
+
+        Args:
+            url (str): The input URL.
+
+        Returns:
+            bool: Boolean value based on whether URL is valid or not.
+        """
+
         is_url_exists = False
 
         try:
