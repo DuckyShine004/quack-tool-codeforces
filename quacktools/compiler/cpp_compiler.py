@@ -22,10 +22,11 @@ class CPPCompiler(Compiler):
 
         for sample_input in self.samples["input"]:
             sample_input = "".join(sample_input).strip()
+            command = f"./{self.executable_file}"
 
             with open("output.txt", "w") as output_file:
                 subprocess.run(
-                    "./" + self.executable_file,
+                    command,
                     check=True,
                     stdout=output_file,
                     input=sample_input.encode(),

@@ -161,6 +161,7 @@ cython_debug/
 
 # Text files
 *.txt
+!requirements.txt
 
 # c/c++ files
 *.cpp
@@ -171,3 +172,6 @@ cython_debug/
 
 # Cache
 *.ccls-cache
+
+# Shell scripts
+*.sh
