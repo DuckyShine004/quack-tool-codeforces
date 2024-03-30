@@ -7,7 +7,7 @@ name = "quacktools"
 version = "0.1.0"
 
 [tool.setuptools]
-packages = ["quacktools", "quacktools.app", "quacktools.cli", "quacktools.compiler", "quacktools.constants", "quacktools.exceptions", "quacktools.utilities"]
+packages = ["quacktools", "quacktools.app", "quacktools.compiler", "quacktools.constants", "quacktools.exceptions", "quacktools.utilities"]
 
 [project.scripts]
 quack = "quacktools.main:main"
@@ -15,9 +15,9 @@ quack = "quacktools.main:main"
 [project]
 name = "quacktools"
 version = "0.1.0"
-description = "A brief description of your package"
+description = "quacktools streamlines the code testing and code submission process."
 authors = [{ name = "Gallon Zhou", email = "gallonzhou04@gmail.com" }]
-# license = { file = "LICENSE" }
+license = { file = "LICENSE" }
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [

@@ -83,8 +83,12 @@ class Utility:
 
     @staticmethod
     def check_url_exists(url):
+        is_url_exists = False
+
         try:
             response = requests.head(url, timeout=5)
-            return response.status_code == 200
+            is_url_exists = response.status_code == 200
         except requests.RequestException:
-            return False
+            pass
+
+        return is_url_exists

@@ -1,6 +1,6 @@
 import subprocess
 from quacktools.constants.table_constants import TEST_CASE_OUTPUT_COLUMNS
-from quacktools.cli.log import Log
+from quacktools.utilities.logger import Logger
 
 from quacktools.compiler.compiler import Compiler
 
@@ -52,4 +52,4 @@ class CPPCompiler(Compiler):
             test_case_results.append("AC" if sample_output == self.user_outputs[test_index] else "WA")
 
         rows = zip(test_case_indices, sample_inputs, sample_outputs, self.user_outputs, test_case_results)
-        Log.log_custom_table(TEST_CASE_OUTPUT_COLUMNS, rows, testing=True)
+        Logger.log_custom_table(TEST_CASE_OUTPUT_COLUMNS, rows)
