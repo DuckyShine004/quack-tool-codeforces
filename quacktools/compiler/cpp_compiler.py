@@ -1,5 +1,5 @@
 import subprocess
-from quacktools.constants.table_constants import TEST_CASE_OUTPUT_COLUMNS
+from quacktools.constants.table_constants import TERMINAL_COLORS, TEST_CASE_OUTPUT_COLUMNS
 from quacktools.utilities.logger import Logger
 
 from quacktools.compiler.compiler import Compiler
@@ -38,6 +38,12 @@ class CPPCompiler(Compiler):
 
         self.user_outputs = user_outputs
 
+    def get_test_case_result(self, sample_output, user_output):
+        if sample_output == user_output:
+            return f"{TERMINAL_COLORS['green']}AC{TERMINAL_COLORS['default']}"
+
+        return f"{TERMINAL_COLORS['red']}WA{TERMINAL_COLORS['default']}"
+
     def test_samples_with_user_output(self):
         test_cases = len(self.samples["input"])
         test_case_indices = []
@@ -50,7 +56,7 @@ class CPPCompiler(Compiler):
             sample_output = "".join(self.samples["output"][test_index])
             sample_inputs.append("".join(self.samples["input"][test_index]))
             sample_outputs.append(sample_output)
-            test_case_results.append("AC" if sample_output == self.user_outputs[test_index] else "WA")
+            test_case_results.append(self.get_test_case_result(sample_output, self.user_outputs[test_index]))
 
         rows = zip(test_case_indices, sample_inputs, sample_outputs, self.user_outputs, test_case_results)
         Logger.log_custom_table(TEST_CASE_OUTPUT_COLUMNS, rows)
