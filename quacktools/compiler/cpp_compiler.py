@@ -6,8 +6,8 @@ from quacktools.compiler.compiler import Compiler
 
 
 class CPPCompiler(Compiler):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, app):
+        super().__init__(app)
         self.executable_file = ""
 
     def compile(self):
