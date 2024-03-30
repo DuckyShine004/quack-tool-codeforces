@@ -1,3 +1,5 @@
+"""App is a module responsible for handling the lifecycle of the quack command."""
+
 import sys
 
 from typing import TYPE_CHECKING
@@ -6,25 +8,41 @@ from quacktools.compiler.cpp_compiler import CPPCompiler
 from quacktools.utilities.utility import Utility
 
 from quacktools.exceptions.url_not_valid_error import URLNotValidError
+from quacktools.exceptions.extension_not_valid_error import ExtensionNotValidError
 
 from quacktools.constants.argument_constants import URL_PREFIX
 
 
 if TYPE_CHECKING:
+    import argparse
+
     from quacktools.compiler.compiler import Compiler
 
 
 class App:
-    def __init__(self):
-        self.arguments = Utility.get_arguments()
-        self.url = self.get_url()
+    """The App instance is a singleton instance, and defines the lifecycle of the application.
 
-    def run(self):
+    Attributes:
+        arguments (argparse.Namespace): The raw user arguments.
+        url (str): The input URL.
+    """
+
+    def __init__(self) -> None:
+        """Initializes the App instance."""
+
+        self.arguments: argparse.Namespace = Utility.get_arguments()
+        self.url: str = self.get_url()
+
+    def run(self) -> None:
+        """Runs the application. It will get the compiler based on the file extension and then compile
+        the user's code. Finally, it will then test the user's output against the sample's output.
+        """
+
         compiler = None
 
         try:
             compiler = self.get_compiler()
-        except Exception as e:
+        except ExtensionNotValidError as e:
             print(e)
 
         if compiler is None:
@@ -35,13 +53,26 @@ class App:
         compiler.get_program_output()
         compiler.test_samples_with_user_output()
 
-    def get_problem_number(self):
+    def get_problem_number(self) -> str:
+        """Returns the problem number of the problem. The problem number will depend on whether the
+        problem is from a problemset or a contest.
+
+        Returns:
+            str: The problem number of the problem.
+        """
+
         if self.arguments.problem is not None:
             return self.arguments.problem
 
         return self.arguments.contest
 
-    def get_url(self):
+    def get_url(self) -> str:
+        """Returns a valid Codeforce URL. If the URL is not valid, an exception will be thrown.
+
+        Returns:
+            str: A valid Codeforces URL.
+        """
+
         url = None
         problem_number = self.get_problem_number()
         difficulty = self.arguments.difficulty
@@ -64,11 +95,21 @@ class App:
 
         return url
 
-    def get_compiler(self):
+    def get_compiler(self) -> None:
+        """Returns a compiler based on the file extension. If the extension of the file is invalid,
+        an exception will be thrown.
+
+        Returns:
+            None: A compiler based on the file extension.
+
+        Raises:
+            ExtensionNotValidError: Exception thrown for invalid extension.
+        """
+
         extension = self.arguments.file.split(".")[1]
 
         match extension:
             case "cpp":
                 return CPPCompiler(self)
 
-        raise Exception(f"Extension {extension} does not exist")
+        raise ExtensionNotValidError(extension)
