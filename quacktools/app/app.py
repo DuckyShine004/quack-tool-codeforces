@@ -1,8 +1,10 @@
-"""App is a module responsible for handling the lifecycle of the quack command."""
+"""This module is responsible for handling the lifecycle of the quack command."""
+
+from __future__ import annotations
 
 import sys
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 from quacktools.compiler.cpp_compiler import CPPCompiler
 from quacktools.utilities.utility import Utility
@@ -95,7 +97,7 @@ class App:
 
         return url
 
-    def get_compiler(self) -> None:
+    def get_compiler(self) -> Union[Compiler, None]:
         """Returns a compiler based on the file extension. If the extension of the file is invalid,
         an exception will be thrown.
 
