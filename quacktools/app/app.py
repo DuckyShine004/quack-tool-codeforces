@@ -45,7 +45,7 @@ class App:
         try:
             compiler = self.get_compiler()
         except ExtensionNotValidError as e:
-            print(e)
+            print(f"{e.__class__.__name__}: {e}")
 
         if compiler is None:
             sys.exit(0)
@@ -102,13 +102,15 @@ class App:
         an exception will be thrown.
 
         Returns:
-            None: A compiler based on the file extension.
+            Union[Compiler, None]: A compiler based on the file extension.
 
         Raises:
             ExtensionNotValidError: Exception thrown for invalid extension.
         """
 
         extension = self.arguments.file.split(".")[1]
+
+        # Add more extensions
 
         match extension:
             case "cpp":
