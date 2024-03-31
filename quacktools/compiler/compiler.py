@@ -62,6 +62,7 @@ class Compiler(ABC):
             subprocess.run(
                 command,
                 check=True,
+                shell=True,
                 stdout=output_file,
                 input=sample_input.encode(),
                 stderr=subprocess.PIPE,

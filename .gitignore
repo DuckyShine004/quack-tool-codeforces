@@ -178,3 +178,8 @@ cython_debug/
 
 # Test files
 test.*
+Test.*
+
+# Java
+*.class
+*.Java

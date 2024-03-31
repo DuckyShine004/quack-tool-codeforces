@@ -1,5 +1,3 @@
-import os
-
 from quacktools.compiler.compiler import Compiler
 
 
@@ -10,7 +8,7 @@ class PythonCompiler(Compiler):
     def get_program_output(self) -> None:
         """Get the user's program's code output."""
 
-        command = ["python3", self.file]
+        command = f"python3 {self.file}"
 
         for sample_input in self.samples["input"]:
             sample_input = "".join(sample_input).strip()
