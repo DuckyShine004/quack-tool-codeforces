@@ -16,8 +16,8 @@ from quacktools.constants.table_constants import TERMINAL_COLORS, TEST_CASE_OUTP
 if TYPE_CHECKING:
     from quacktools.app.app import App
 
-# Note to self: compiler only a singleton instance, there may be no need for other types of compilers other than to be explicit.
-# We will see if it becomes a redundant mess.
+# Note to self: compiler only a singleton instance, there may be no need for other types of
+# compilers other than to be explicit. We will see if it becomes a redundant mess.
 
 
 class Compiler(ABC):
@@ -57,7 +57,14 @@ class Compiler(ABC):
         self.set_file()
         self.set_samples()
 
-    def get_user_output(self, sample_input, command):
+    def get_user_output(self, sample_input: str, command: str) -> None:
+        """Get the user's code output for the current test case.
+
+        Args:
+            sample_input (str): The current test case sample input.
+            command (str): The command to be executed.
+        """
+
         with open(f"{self.filename}.txt", "w", encoding="utf-8") as output_file:
             subprocess.run(
                 command,

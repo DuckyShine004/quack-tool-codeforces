@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Union
 
 from quacktools.compiler.c_compiler import CCompiler
 from quacktools.compiler.cpp_compiler import CPPCompiler
-from quacktools.compiler.csharp_compiler import CsharpCompiler
+from quacktools.compiler.c_sharp_compiler import CSharpCompiler
 from quacktools.compiler.java_compiler import JavaCompiler
 from quacktools.compiler.python_compiler import PythonCompiler
 
@@ -107,7 +107,16 @@ class App:
 
         return url
 
-    def get_extension_type(self):
+    def get_extension_type(self) -> Union[str, None]:
+        """Returns the extension type of the file.
+
+        Returns:
+            Union[str, None]: The extension type.
+
+        Raises:
+            ExtensionNotValidError: Exception thrown for invalid extension.
+        """
+
         file_extension = self.arguments.file.split(".")[1]
 
         for extension_type, extensions in EXTENSIONS.items():
@@ -121,10 +130,7 @@ class App:
         an exception will be thrown.
 
         Returns:
-            Union[Compiler, None]: A compiler based on the file extension.
-
-        Raises:
-            ExtensionNotValidError: Exception thrown for invalid extension.
+            Compiler: A compiler based on the file extension.
         """
 
         match extension_type:
@@ -135,6 +141,6 @@ class App:
             case "c":
                 return CCompiler(self)
             case "csharp":
-                return CsharpCompiler(self)
+                return CSharpCompiler(self)
             case "java":
                 return JavaCompiler(self)

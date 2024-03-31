@@ -1,10 +1,27 @@
+"""This module defines the c compiler. Allows the user to compile c code."""
+
+from __future__ import annotations
+
 import subprocess
+
+from typing import TYPE_CHECKING
 
 from quacktools.compiler.compiler import Compiler
 
+if TYPE_CHECKING:
+    from quacktools.app.app import App
+
 
 class CCompiler(Compiler):
-    def __init__(self, app):
+    """The CCompiler instance allows the user to compile c code."""
+
+    def __init__(self, app: App) -> None:
+        """Initializes the compiler.
+
+        Args:
+            app (App): The application instance.
+        """
+
         super().__init__(app)
 
         self.executable_file = ""

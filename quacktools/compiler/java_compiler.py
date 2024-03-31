@@ -1,13 +1,32 @@
+"""This module defines the java compiler. Allows the user to compile java code."""
+
+from __future__ import annotations
+
 import subprocess
+
+from typing import TYPE_CHECKING
 
 from quacktools.compiler.compiler import Compiler
 
+if TYPE_CHECKING:
+    from quacktools.app.app import App
+
 
 class JavaCompiler(Compiler):
-    def __init__(self, app):
+    """The JavaCompiler instance allows the user to compile java code."""
+
+    def __init__(self, app: App) -> None:
+        """Initializes the compiler.
+
+        Args:
+            app (App): The application instance.
+        """
+
         super().__init__(app)
 
-    def compile(self):
+    def compile(self) -> None:
+        """Compiles the user's code."""
+
         command = f"javac {self.file}"
         subprocess.run(command, check=True, shell=True)
 
