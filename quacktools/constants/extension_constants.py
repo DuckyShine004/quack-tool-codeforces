@@ -1,6 +1,8 @@
 """This module contains extension constants and compiler constants.
 
 Attributes:
+    APPLICATION_NAME (str): The application name.
+    CACHE_FILE_NAME (str): The cache file name.
     COMPILER_TYPES (Dict): All valid compiler types.
     EXTENSIONS (Dict): All valid extension types.
 """
