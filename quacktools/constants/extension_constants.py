@@ -5,6 +5,9 @@ Attributes:
     EXTENSIONS (Dict): All valid extension types.
 """
 
+APPLICATION_NAME = "quacktools"
+CACHE_FILE_NAME = "/cache.json"
+
 COMPILER_TYPES = {
     "cpp",
     "c",

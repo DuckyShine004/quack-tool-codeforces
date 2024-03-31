@@ -6,6 +6,8 @@ import sys
 
 from typing import TYPE_CHECKING, Union
 
+from quacktools.cache.cache import Cache
+
 from quacktools.compiler.c_compiler import CCompiler
 from quacktools.compiler.cpp_compiler import CPPCompiler
 from quacktools.compiler.c_sharp_compiler import CSharpCompiler
@@ -40,6 +42,7 @@ class App:
 
         self.arguments: argparse.Namespace = Utility.get_arguments()
         self.url: str = self.get_url()
+        self.cache = Cache()
 
     def run(self) -> None:
         """Runs the application. It will get the compiler based on the file extension and then compile

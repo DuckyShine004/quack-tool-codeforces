@@ -103,7 +103,7 @@ class Utility:
         if arguments.file is None:
             raise MissingFileError()
 
-        if arguments.file not in os.listdir():
+        if not os.path.exists(arguments.file):
             raise FileNotFoundError(FILE_NOT_FOUND_ERROR)
 
         if arguments.difficulty is None:

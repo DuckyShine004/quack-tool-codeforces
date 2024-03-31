@@ -102,9 +102,15 @@ class Compiler(ABC):
         self.filename, self.extension = self.app.arguments.file.split(".")
 
     def set_samples(self) -> None:
-        """Set the I/O samples."""
+        """Set the I/O samples. If the samples already exist, then we get the cached samples."""
 
-        self.samples = Utility.get_samples(self.app.url)
+        cache_key = self.app.url
+
+        if self.app.cache.check_samples_cached(cache_key):
+            self.samples = self.app.cache.get_samples(cache_key)
+        else:
+            self.samples = Utility.get_samples(cache_key)
+            self.app.cache.set_samples(cache_key, self.samples)
 
     def test_samples_with_user_output(self) -> None:
         """Compare the user's code output with the sample's output. Results will be put into a table and
