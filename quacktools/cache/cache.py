@@ -19,7 +19,7 @@ class Cache:
         cache_file_path (str): The cache file path.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initializes the cache instance."""
 
         self.cache_directory = ""

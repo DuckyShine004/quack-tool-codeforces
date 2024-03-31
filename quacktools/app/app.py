@@ -18,8 +18,9 @@ from quacktools.utilities.utility import Utility
 
 from quacktools.exceptions.url_not_valid_error import URLNotValidError
 from quacktools.exceptions.extension_not_valid_error import ExtensionNotValidError
+from quacktools.exceptions.argument_flags_not_valid_error import ArgumentFlagsNotValidError
 
-from quacktools.constants.argument_constants import URL_PREFIX
+from quacktools.constants.argument_constants import URL_PREFIX, VALID_ARGUMENT_FLAGS
 from quacktools.constants.extension_constants import EXTENSIONS, COMPILER_TYPES
 
 
@@ -40,9 +41,29 @@ class App:
     def __init__(self) -> None:
         """Initializes the App instance."""
 
+        self.argument_flags = self.get_argument_flags()
         self.arguments: argparse.Namespace = Utility.get_arguments()
         self.url: str = self.get_url()
         self.cache = Cache()
+
+    def get_argument_flags(self):
+        argument_flags = " ".join([sys.argv[i] for i in range(1, len(sys.argv), 2)])
+        is_argument_flags_valid = False
+
+        try:
+            self.validate_argument_flags(argument_flags)
+            is_argument_flags_valid = True
+        except ArgumentFlagsNotValidError as e:
+            print(f"{e.__class__.__name__}: {e}")
+
+        if not is_argument_flags_valid:
+            sys.exit(0)
+
+        return argument_flags
+
+    def validate_argument_flags(self, argument_flags) -> None:
+        if argument_flags not in VALID_ARGUMENT_FLAGS:
+            raise ArgumentFlagsNotValidError()
 
     def run(self) -> None:
         """Runs the application. It will get the compiler based on the file extension and then compile
@@ -88,7 +109,7 @@ class App:
             str: A valid Codeforces URL.
         """
 
-        url = None
+        url = ""
         problem_number = self.get_problem_number()
         difficulty = self.arguments.difficulty
 

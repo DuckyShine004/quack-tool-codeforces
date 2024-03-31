@@ -22,5 +22,22 @@ ARGUMENT_FLAGS = {
     },
     "-d": {
         "dest": "difficulty",
+        "help": "What is the difficulty of the problem (should be uppercase letter), e.g. A.",
     },
+    "-le": {
+        "action": "store_true",
+        "help": "List all supported file extension types.",
+    },
+    "-du": {
+        "action": "store_true",
+        "help": "Get detailed usage on how to use 'quacktools'.",
+    },
+}
+
+VALID_ARGUMENT_FLAGS = {
+    "-t -p -d",
+    "-t -c -d",
+    "-h",
+    "-le",
+    "-du",
 }
