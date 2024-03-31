@@ -116,7 +116,7 @@ class App:
 
         raise ExtensionNotValidError(file_extension)
 
-    def get_compiler(self, extension_type) -> Union[Compiler, None]:
+    def get_compiler(self, extension_type) -> Compiler:
         """Returns a compiler based on the file extension. If the extension of the file is invalid,
         an exception will be thrown.
 
@@ -134,7 +134,7 @@ class App:
                 return CPPCompiler(self)
             case "c":
                 return CCompiler(self)
-            case "c#":
+            case "csharp":
                 return CsharpCompiler(self)
             case "java":
                 return JavaCompiler(self)

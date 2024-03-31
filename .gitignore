@@ -177,6 +177,8 @@ cython_debug/
 *.sh
 
 # Test files
+/test
+/Test
 test.*
 Test.*
 
