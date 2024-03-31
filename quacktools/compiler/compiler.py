@@ -6,6 +6,8 @@ from abc import ABC, abstractmethod
 
 from typing import TYPE_CHECKING, List, Dict
 
+import subprocess
+
 from quacktools.utilities.logger import Logger
 from quacktools.utilities.utility import Utility
 
@@ -13,6 +15,9 @@ from quacktools.constants.table_constants import TERMINAL_COLORS, TEST_CASE_OUTP
 
 if TYPE_CHECKING:
     from quacktools.app.app import App
+
+# Note to self: compiler only a singleton instance, there may be no need for other types of compilers other than to be explicit.
+# We will see if it becomes a redundant mess.
 
 
 class Compiler(ABC):
@@ -43,10 +48,6 @@ class Compiler(ABC):
         self.samples: Dict[str, List[str]] = {}
 
     @abstractmethod
-    def compile(self) -> None:
-        """Abstract method. Compiles the user's code."""
-
-    @abstractmethod
     def get_program_output(self) -> None:
         """Abstract method. Retrieves the user's program's output."""
 
@@ -55,6 +56,19 @@ class Compiler(ABC):
 
         self.set_file()
         self.set_samples()
+
+    def get_user_output(self, sample_input, command):
+        with open(f"{self.filename}.txt", "w", encoding="utf-8") as output_file:
+            subprocess.run(
+                command,
+                check=True,
+                stdout=output_file,
+                input=sample_input.encode(),
+                stderr=subprocess.PIPE,
+            )
+
+        with open(f"{self.filename}.txt", "r", encoding="utf-8") as output_file:
+            self.user_outputs.append(output_file.read())
 
     def get_test_case_result(self, sample_output: str, user_output: str) -> str:
         """Compares the sample's output to the user's output for the current test case. AC means that

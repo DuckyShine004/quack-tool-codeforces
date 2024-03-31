@@ -42,22 +42,8 @@ class CPPCompiler(Compiler):
     def get_program_output(self) -> None:
         """Get the user's program's code output."""
 
-        user_outputs = []
+        command = f"./{self.executable_file}"
 
         for sample_input in self.samples["input"]:
             sample_input = "".join(sample_input).strip()
-            command = f"./{self.executable_file}"
-
-            with open("output.txt", "w", encoding="utf-8") as output_file:
-                subprocess.run(
-                    command,
-                    check=True,
-                    stdout=output_file,
-                    input=sample_input.encode(),
-                    stderr=subprocess.PIPE,
-                )
-
-            with open("output.txt", "r", encoding="utf-8") as output_file:
-                user_outputs.append(output_file.read())
-
-        self.user_outputs = user_outputs
+            self.get_user_output(sample_input, command)

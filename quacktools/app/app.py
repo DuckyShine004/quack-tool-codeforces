@@ -6,13 +6,19 @@ import sys
 
 from typing import TYPE_CHECKING, Union
 
+from quacktools.compiler.c_compiler import CCompiler
 from quacktools.compiler.cpp_compiler import CPPCompiler
+from quacktools.compiler.csharp_compiler import CsharpCompiler
+from quacktools.compiler.java_compiler import JavaCompiler
+from quacktools.compiler.python_compiler import PythonCompiler
+
 from quacktools.utilities.utility import Utility
 
 from quacktools.exceptions.url_not_valid_error import URLNotValidError
 from quacktools.exceptions.extension_not_valid_error import ExtensionNotValidError
 
 from quacktools.constants.argument_constants import URL_PREFIX
+from quacktools.constants.extension_constants import EXTENSIONS, COMPILER_TYPES
 
 
 if TYPE_CHECKING:
@@ -40,18 +46,22 @@ class App:
         the user's code. Finally, it will then test the user's output against the sample's output.
         """
 
-        compiler = None
+        extension_type = None
 
         try:
-            compiler = self.get_compiler()
+            extension_type = self.get_extension_type()
         except ExtensionNotValidError as e:
             print(f"{e.__class__.__name__}: {e}")
 
-        if compiler is None:
+        if extension_type is None:
             sys.exit(0)
 
+        compiler = self.get_compiler(extension_type)
         compiler.initialize()
-        compiler.compile()
+
+        if extension_type in COMPILER_TYPES:
+            compiler.compile()
+
         compiler.get_program_output()
         compiler.test_samples_with_user_output()
 
@@ -97,7 +107,16 @@ class App:
 
         return url
 
-    def get_compiler(self) -> Union[Compiler, None]:
+    def get_extension_type(self):
+        file_extension = self.arguments.file.split(".")[1]
+
+        for extension_type, extensions in EXTENSIONS.items():
+            if file_extension in extensions:
+                return extension_type
+
+        raise ExtensionNotValidError(file_extension)
+
+    def get_compiler(self, extension_type) -> Union[Compiler, None]:
         """Returns a compiler based on the file extension. If the extension of the file is invalid,
         an exception will be thrown.
 
@@ -108,12 +127,14 @@ class App:
             ExtensionNotValidError: Exception thrown for invalid extension.
         """
 
-        extension = self.arguments.file.split(".")[1]
-
-        # Add more extensions
-
-        match extension:
+        match extension_type:
+            case "python":
+                return PythonCompiler(self)
             case "cpp":
                 return CPPCompiler(self)
-
-        raise ExtensionNotValidError(extension)
+            case "c":
+                return CCompiler(self)
+            case "c#":
+                return CsharpCompiler(self)
+            case "java":
+                return JavaCompiler(self)

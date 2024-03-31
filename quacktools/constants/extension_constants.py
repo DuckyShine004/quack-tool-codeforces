@@ -1,3 +1,10 @@
+COMPILER_TYPES = {
+    "cpp",
+    "c",
+    "csharp",
+    "java",
+}
+
 EXTENSIONS = {
     "python": {
         "py",
@@ -15,5 +22,8 @@ EXTENSIONS = {
     "csharp": {
         "cs",
         "csx",
+    },
+    "java": {
+        "java",
     },
 }
