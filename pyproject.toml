@@ -7,7 +7,7 @@ name = "quacktools"
 version = "0.1.1"
 
 [tool.setuptools]
-packages = ["quacktools", "quacktools.app", "quacktools.compiler", "quacktools.constants", "quacktools.exceptions", "quacktools.utilities"]
+packages = ["quacktools", "quacktools.cache", "quacktools.app", "quacktools.compiler", "quacktools.constants", "quacktools.exceptions", "quacktools.utilities"]
 
 [project.scripts]
 quack = "quacktools.main:main"
