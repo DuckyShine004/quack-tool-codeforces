@@ -1,4 +1,5 @@
-"""The Logger module will log events to the terminal."""
+"""The Logger module will log events to the terminal.
+"""
 
 from typing import List, Any
 

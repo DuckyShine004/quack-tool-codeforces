@@ -85,7 +85,16 @@ class Utility:
         return arguments
 
     @staticmethod
-    def validate_argument_flags(argument_flags):
+    def validate_argument_flags(argument_flags: str) -> None:
+        """Check if the input argument flags are valid. Exception will be thrown if the argument flags are invalid.
+
+        Args:
+            argument_flags (str): The user argument flags.
+
+        Raises:
+            ArgumentFlagsNotValidError: Thrown if argument flags are invalid.
+        """
+
         if argument_flags not in VALID_ARGUMENT_FLAGS:
             raise ArgumentFlagsNotValidError()
 
@@ -123,7 +132,7 @@ class Utility:
             url (str): The input URL.
 
         Raises:
-            URLNotValidError: Thrown if URL is not valid.
+            URLNotValidError: Thrown if URL is invalid.
         """
 
         if not validators.url(url) or not Utility.check_url_exists(url):

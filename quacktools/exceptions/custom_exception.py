@@ -1,4 +1,5 @@
-"""This module defines the custom exception itself. Referenced by custom exceptions."""
+"""This module defines the custom exception itself. Referenced by custom exceptions.
+"""
 
 
 class CustomException(Exception):

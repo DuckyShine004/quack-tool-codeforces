@@ -2,7 +2,12 @@
 
 Attributes:
     ARGUMENT_FLAGS (Dict): Argument flags. The user flags must match any of the argument flags.
+    DETAILED_USAGE_FLAG (str): Detailed usage flag.
+    LIST_EXTENSIONS_FLAG (str): List extensions flag.
+    PARSE_FLAGS (Set): Set of valid parsing flags.
+    TEST_FLAGS (Set): Set of valid testing flags.
     URL_PREFIX (str): The URL for Codeforces.
+    VALID_ARGUMENT_FLAGS (Set): Set of valid argument flags.
 """
 
 URL_PREFIX = "https://codeforces.com"

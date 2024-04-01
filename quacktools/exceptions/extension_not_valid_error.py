@@ -1,4 +1,5 @@
-"""This module defines a custom exception. It is thrown when the extension of the file is invalid."""
+"""This module defines a custom exception. It is thrown when the extension of the file is invalid.
+"""
 
 from quacktools.exceptions.custom_exception import CustomException
 

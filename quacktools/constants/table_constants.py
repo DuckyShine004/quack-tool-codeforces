@@ -1,6 +1,11 @@
 """This module contains table constants. Tables are displayed to the terminal.
 
 Attributes:
+    DETAILED_USAGE_HEADERS (List): Detailed usage table headers.
+    DETAILED_USAGE_ROWS (List): Detailed usage table rows.
+    EXTENSION_HEADERS (List): Extension table headers.
+    EXTENSION_ROWS (List): Extension table rows.
+    INSTRUCTIONS (Dict): Set of instructions.
     TERMINAL_COLORS (Dict): Terminal colors for text.
     TEST_CASE_OUTPUT_COLUMNS (List): Column headers for tables.
 """

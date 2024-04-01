@@ -1,6 +1,7 @@
 """This module contains exception error messages.
 
 Attributes:
+    ARGUMENT_FLAGS_NOT_VALID_ERROR (str): User argument flags are invalid.
     FILE_NOT_FOUND_ERROR (str): File is not found in current directory error message.
     MISSING_DIFFICULTY_ERROR (str): Difficulty argument is not specified error message.
     MISSING_FILE_ERROR (str): File is not specified error message.
