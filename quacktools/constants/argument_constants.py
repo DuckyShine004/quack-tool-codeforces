@@ -41,3 +41,11 @@ VALID_ARGUMENT_FLAGS = {
     "-le",
     "-du",
 }
+
+TEST_FLAGS = {
+    "-t -p -d",
+    "-t -c -d",
+}
+
+LIST_EXTENSIONS_FLAG = "-le"
+DETAILED_USAGE_FLAG = "-du"

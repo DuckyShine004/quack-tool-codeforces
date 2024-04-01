@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sys
+import argparse
 
 from typing import TYPE_CHECKING, Union
 
@@ -14,19 +15,24 @@ from quacktools.compiler.c_sharp_compiler import CSharpCompiler
 from quacktools.compiler.java_compiler import JavaCompiler
 from quacktools.compiler.python_compiler import PythonCompiler
 
+from quacktools.utilities.logger import Logger
 from quacktools.utilities.utility import Utility
 
 from quacktools.exceptions.url_not_valid_error import URLNotValidError
 from quacktools.exceptions.extension_not_valid_error import ExtensionNotValidError
 from quacktools.exceptions.argument_flags_not_valid_error import ArgumentFlagsNotValidError
 
-from quacktools.constants.argument_constants import URL_PREFIX, VALID_ARGUMENT_FLAGS
 from quacktools.constants.extension_constants import EXTENSIONS, COMPILER_TYPES
+from quacktools.constants.argument_constants import (
+    URL_PREFIX,
+    VALID_ARGUMENT_FLAGS,
+    TEST_FLAGS,
+    LIST_EXTENSIONS_FLAG,
+    DETAILED_USAGE_FLAG,
+)
 
 
 if TYPE_CHECKING:
-    import argparse
-
     from quacktools.compiler.compiler import Compiler
 
 
@@ -41,35 +47,25 @@ class App:
     def __init__(self) -> None:
         """Initializes the App instance."""
 
-        self.argument_flags = self.get_argument_flags()
         self.arguments: argparse.Namespace = Utility.get_arguments()
+        self.cache: Cache = Cache()
         self.url: str = self.get_url()
-        self.cache = Cache()
 
-    def get_argument_flags(self):
-        argument_flags = " ".join([sys.argv[i] for i in range(1, len(sys.argv), 2)])
-        is_argument_flags_valid = False
+        # Match user argument flags to appropriate method
 
-        try:
-            self.validate_argument_flags(argument_flags)
-            is_argument_flags_valid = True
-        except ArgumentFlagsNotValidError as e:
-            print(f"{e.__class__.__name__}: {e}")
-
-        if not is_argument_flags_valid:
-            sys.exit(0)
-
-        return argument_flags
-
-    def validate_argument_flags(self, argument_flags) -> None:
-        if argument_flags not in VALID_ARGUMENT_FLAGS:
-            raise ArgumentFlagsNotValidError()
-
-    def run(self) -> None:
+    def run(self, argument_flags: str) -> None:
         """Runs the application. It will get the compiler based on the file extension and then compile
         the user's code. Finally, it will then test the user's output against the sample's output.
         """
 
+        if argument_flags in TEST_FLAGS:
+            self.test_user_code()
+        elif argument_flags == LIST_EXTENSIONS_FLAG:
+            Logger.log_extensions()
+        elif argument_flags == DETAILED_USAGE_FLAG:
+            Logger.log_detailed_usage()
+
+    def test_user_code(self):
         extension_type = None
 
         try:
@@ -117,6 +113,9 @@ class App:
             url = URL_PREFIX + f"/contest/{problem_number}/problem/{difficulty}"
         else:
             url = URL_PREFIX + f"/problemset/problem/{problem_number}/{difficulty}"
+
+        if self.cache.check_samples_cached(url):
+            return url
 
         is_url_valid = False
 

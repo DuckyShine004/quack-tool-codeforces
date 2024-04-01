@@ -1,4 +1,4 @@
-"""This module defines a custom exception. It is thrown when the user argument 
+"""This module defines a custom exception. It is thrown when the user argument
 flags are invalid.
 """
 

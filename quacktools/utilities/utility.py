@@ -14,12 +14,13 @@ import validators
 
 from bs4 import BeautifulSoup
 
+from quacktools.exceptions.argument_flags_not_valid_error import ArgumentFlagsNotValidError
 from quacktools.exceptions.missing_argument_error import MissingArgumentError
 from quacktools.exceptions.missing_test_file_error import MissingFileError
 from quacktools.exceptions.missing_difficulty_error import MissingDifficultyError
 from quacktools.exceptions.url_not_valid_error import URLNotValidError
 
-from quacktools.constants.argument_constants import ARGUMENT_FLAGS
+from quacktools.constants.argument_constants import ARGUMENT_FLAGS, VALID_ARGUMENT_FLAGS
 from quacktools.constants.exception_constants import MISSING_PROBLEM_TYPE_ERROR, FILE_NOT_FOUND_ERROR
 
 
@@ -82,6 +83,11 @@ class Utility:
             sys.exit(0)
 
         return arguments
+
+    @staticmethod
+    def validate_argument_flags(argument_flags):
+        if argument_flags not in VALID_ARGUMENT_FLAGS:
+            raise ArgumentFlagsNotValidError()
 
     @staticmethod
     def validate_arguments(arguments: argparse.Namespace) -> None:
