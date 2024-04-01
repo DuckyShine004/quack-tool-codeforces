@@ -9,6 +9,10 @@ Quacktools streamlines the code testing and code submission process for Codeforc
   <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="Python.io"/>
 </p>
 
+## Snapshots
+<p align="center">
+  <img src="https://raw.githubusercontent.com/DuckyShine004/tetris/main/.snapshots/snap.png" alt="snap.png"/>
+</p>
 
 ## Getting Started
 
@@ -31,9 +35,11 @@ To clone and work on the project, simply follow the instructions as listed below
    ```sh
    pip install -r requirements.txt
    ```
+
 ### Usage
 ```
-usage: quack [-h] [-t FILE] [-p PROBLEM] [-c CONTEST] [-d DIFFICULTY]
+usage: quack [-h] [-t FILE] [-p PROBLEM] [-c CONTEST] [-d DIFFICULTY] [-le]
+             [-du]
 
 options:
   -h, --help     show this help message and exit
@@ -41,8 +47,12 @@ options:
                  problem from a contest.
   -p PROBLEM     What is the problem number, e.g. 1950.
   -c CONTEST     What is the contest number, e.g. 1950.
-  -d DIFFICULTY
+  -d DIFFICULTY  What is the difficulty of the problem (should be uppercase
+                 letter), e.g. A.
+  -le            List all supported file extension types.
+  -du            Get detailed usage on how to use 'quacktools'.
 ```
+
 #### Detailed Usage
 
 To use `quacktools`, you must use the `quack` command. See below for detailed usage:
