@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [metadata]
 name = "quacktools"
-version = "0.1.1"
+version = "1.0.0"
 
 [tool.setuptools]
 packages = [
@@ -22,7 +22,7 @@ quack = "quacktools.main:main"
 
 [project]
 name = "quacktools"
-version = "0.1.1"
+version = "1.0.0"
 description = "quacktools streamlines the code testing and code submission process."
 authors = [{name = "Gallon Zhou", email = "gallonzhou04@gmail.com"}]
 license = {file = "LICENSE"}
