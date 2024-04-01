@@ -1,4 +1,5 @@
-"""This module defines the python compiler. Allows the user to interpret python code."""
+"""This module defines the python compiler. Allows the user to interpret python code.
+"""
 
 from __future__ import annotations
 

@@ -1,4 +1,5 @@
-"""This module is responsible for handling the lifecycle of the quack command."""
+"""This module is responsible for handling the lifecycle of the quack command.
+"""
 
 from __future__ import annotations
 
@@ -42,6 +43,7 @@ class App:
     Attributes:
         arguments (argparse.Namespace): The raw user arguments.
         url (str): The input URL.
+        cache (Cache): The local cache.
     """
 
     def __init__(self) -> None:
@@ -54,8 +56,10 @@ class App:
         # Match user argument flags to appropriate method
 
     def run(self, argument_flags: str) -> None:
-        """Runs the application. It will get the compiler based on the file extension and then compile
-        the user's code. Finally, it will then test the user's output against the sample's output.
+        """Runs the application. It will execute functionalities based on the user's argument flags.
+
+        Args:
+            argument_flags (str): The user's argument flags.
         """
 
         if argument_flags in PARSE_FLAGS:
@@ -69,6 +73,8 @@ class App:
             Logger.log_custom_table(*INSTRUCTIONS["detailed_usage"])
 
     def test_user_code(self):
+        """Test the user's code with the I/O samples."""
+
         self.url = self.get_url()
 
         extension_type = None
@@ -159,6 +165,9 @@ class App:
 
         Returns:
             Compiler: A compiler based on the file extension.
+
+        Args:
+            extension_type (TYPE): Description
         """
 
         match extension_type:

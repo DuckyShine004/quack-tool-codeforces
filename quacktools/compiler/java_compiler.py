@@ -1,4 +1,5 @@
-"""This module defines the java compiler. Allows the user to compile java code."""
+"""This module defines the java compiler. Allows the user to compile java code.
+"""
 
 from __future__ import annotations
 

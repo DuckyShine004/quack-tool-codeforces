@@ -1,4 +1,5 @@
-"""This module defines the caching logic which allows for fast test sample data retrieval."""
+"""This module defines the caching logic which allows for fast test sample data retrieval.
+"""
 
 from typing import List, Dict
 

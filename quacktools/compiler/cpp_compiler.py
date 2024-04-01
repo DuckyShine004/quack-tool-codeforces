@@ -1,4 +1,5 @@
-"""This module defines the c++ compiler. Allows the user to compile c++ code."""
+"""This module defines the c++ compiler. Allows the user to compile c++ code.
+"""
 
 from __future__ import annotations
 
