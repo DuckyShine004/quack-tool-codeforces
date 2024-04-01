@@ -1,4 +1,5 @@
-"""This module defines the c compiler. Allows the user to compile c code."""
+"""This module defines the c compiler. Allows the user to compile c code.
+"""
 
 from __future__ import annotations
 
@@ -13,7 +14,11 @@ if TYPE_CHECKING:
 
 
 class CCompiler(Compiler):
-    """The CCompiler instance allows the user to compile c code."""
+    """The CCompiler instance allows the user to compile c code.
+
+    Attributes:
+        executable_file (str): Description
+    """
 
     def __init__(self, app: App) -> None:
         """Initializes the compiler.

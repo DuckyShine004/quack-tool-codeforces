@@ -2,4 +2,5 @@
     "reportAttributeAccessIssue": false,
     "reportArgumentType": false,
     "reportReturnType": false,
+    "reportAssignmentType": false,
 }

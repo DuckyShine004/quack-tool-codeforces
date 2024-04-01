@@ -1,4 +1,5 @@
-"""This module defines the c sharp compiler. Allows the user to compile c sharp code."""
+"""This module defines the c sharp compiler. Allows the user to compile c sharp code.
+"""
 
 from __future__ import annotations
 

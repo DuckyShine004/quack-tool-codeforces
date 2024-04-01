@@ -10,7 +10,7 @@ from quacktools.constants.exception_constants import MISSING_DIFFICULTY_ERROR
 class MissingDifficultyError(MissingArgumentError):
     """Custom exception. Thrown when the difficulty of the problem is not specified in the arguments."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initializes the MissingDifficultyError exception."""
 
         super().__init__(MISSING_DIFFICULTY_ERROR)

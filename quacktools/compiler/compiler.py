@@ -1,4 +1,5 @@
-"""This module defines the structure of a compiler. Custom compilers must reference the base compiler."""
+"""This module defines the structure of a compiler. Custom compilers must reference the base compiler.
+"""
 
 from __future__ import annotations
 
@@ -25,11 +26,13 @@ class Compiler(ABC):
     reference the parent class.
 
     Attributes:
-        app (App): The application instance.
         file (str): The file.
+        samples (Dict): The I/O samples.
+
+    Deleted Attributes:
+        app (App): The application instance.
         filename (str): The name of the file.
         extension (str): The extension of the file.
-        samples (Dict): The I/O samples.
         user_outputs (List): List containing the user's output for each test case.
     """
 
@@ -130,5 +133,5 @@ class Compiler(ABC):
             sample_outputs.append(sample_output)
             test_case_results.append(self.get_test_case_result(sample_output, self.user_outputs[test_index]))
 
-        rows = zip(test_case_indices, sample_inputs, sample_outputs, self.user_outputs, test_case_results)
+        rows = [test_case_indices, sample_inputs, sample_outputs, self.user_outputs, test_case_results]
         Logger.log_custom_table(TEST_CASE_OUTPUT_COLUMNS, rows)

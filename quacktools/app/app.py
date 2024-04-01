@@ -1,8 +1,10 @@
-"""This module is responsible for handling the lifecycle of the quack command."""
+"""This module is responsible for handling the lifecycle of the quack command.
+"""
 
 from __future__ import annotations
 
 import sys
+import argparse
 
 from typing import TYPE_CHECKING, Union
 
@@ -14,18 +16,24 @@ from quacktools.compiler.c_sharp_compiler import CSharpCompiler
 from quacktools.compiler.java_compiler import JavaCompiler
 from quacktools.compiler.python_compiler import PythonCompiler
 
+from quacktools.utilities.logger import Logger
 from quacktools.utilities.utility import Utility
 
 from quacktools.exceptions.url_not_valid_error import URLNotValidError
 from quacktools.exceptions.extension_not_valid_error import ExtensionNotValidError
 
-from quacktools.constants.argument_constants import URL_PREFIX
+from quacktools.constants.table_constants import INSTRUCTIONS
 from quacktools.constants.extension_constants import EXTENSIONS, COMPILER_TYPES
+from quacktools.constants.argument_constants import (
+    URL_PREFIX,
+    TEST_FLAGS,
+    PARSE_FLAGS,
+    LIST_EXTENSIONS_FLAG,
+    DETAILED_USAGE_FLAG,
+)
 
 
 if TYPE_CHECKING:
-    import argparse
-
     from quacktools.compiler.compiler import Compiler
 
 
@@ -35,19 +43,39 @@ class App:
     Attributes:
         arguments (argparse.Namespace): The raw user arguments.
         url (str): The input URL.
+        cache (Cache): The local cache.
     """
 
     def __init__(self) -> None:
         """Initializes the App instance."""
 
-        self.arguments: argparse.Namespace = Utility.get_arguments()
-        self.url: str = self.get_url()
-        self.cache = Cache()
+        self.arguments: argparse.Namespace = argparse.Namespace()
+        self.cache: Cache = Cache()
+        self.url: str = ""
 
-    def run(self) -> None:
-        """Runs the application. It will get the compiler based on the file extension and then compile
-        the user's code. Finally, it will then test the user's output against the sample's output.
+        # Match user argument flags to appropriate method
+
+    def run(self, argument_flags: str) -> None:
+        """Runs the application. It will execute functionalities based on the user's argument flags.
+
+        Args:
+            argument_flags (str): The user's argument flags.
         """
+
+        if argument_flags in PARSE_FLAGS:
+            self.arguments = Utility.get_arguments()
+
+        if argument_flags in TEST_FLAGS:
+            self.test_user_code()
+        elif argument_flags == LIST_EXTENSIONS_FLAG:
+            Logger.log_custom_table(*INSTRUCTIONS["extensions"])
+        elif argument_flags == DETAILED_USAGE_FLAG:
+            Logger.log_custom_table(*INSTRUCTIONS["detailed_usage"])
+
+    def test_user_code(self):
+        """Test the user's code with the I/O samples."""
+
+        self.url = self.get_url()
 
         extension_type = None
 
@@ -88,7 +116,7 @@ class App:
             str: A valid Codeforces URL.
         """
 
-        url = None
+        url = ""
         problem_number = self.get_problem_number()
         difficulty = self.arguments.difficulty
 
@@ -96,6 +124,9 @@ class App:
             url = URL_PREFIX + f"/contest/{problem_number}/problem/{difficulty}"
         else:
             url = URL_PREFIX + f"/problemset/problem/{problem_number}/{difficulty}"
+
+        if self.cache.check_samples_cached(url):
+            return url
 
         is_url_valid = False
 
@@ -134,6 +165,9 @@ class App:
 
         Returns:
             Compiler: A compiler based on the file extension.
+
+        Args:
+            extension_type (TYPE): Description
         """
 
         match extension_type:

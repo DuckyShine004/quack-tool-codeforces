@@ -1,4 +1,5 @@
-"""This module defines the caching logic which allows for fast test sample data retrieval."""
+"""This module defines the caching logic which allows for fast test sample data retrieval.
+"""
 
 from typing import List, Dict
 
@@ -19,7 +20,7 @@ class Cache:
         cache_file_path (str): The cache file path.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initializes the cache instance."""
 
         self.cache_directory = ""

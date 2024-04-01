@@ -1,4 +1,5 @@
-"""This module defines a custom exception. It is thrown when the file is not specified in the arguments."""
+"""This module defines a custom exception. It is thrown when the file is not specified in the arguments.
+"""
 
 from quacktools.exceptions.missing_argument_error import MissingArgumentError
 
