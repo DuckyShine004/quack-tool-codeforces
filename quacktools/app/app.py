@@ -20,13 +20,13 @@ from quacktools.utilities.utility import Utility
 
 from quacktools.exceptions.url_not_valid_error import URLNotValidError
 from quacktools.exceptions.extension_not_valid_error import ExtensionNotValidError
-from quacktools.exceptions.argument_flags_not_valid_error import ArgumentFlagsNotValidError
 
+from quacktools.constants.table_constants import INSTRUCTIONS
 from quacktools.constants.extension_constants import EXTENSIONS, COMPILER_TYPES
 from quacktools.constants.argument_constants import (
     URL_PREFIX,
-    VALID_ARGUMENT_FLAGS,
     TEST_FLAGS,
+    PARSE_FLAGS,
     LIST_EXTENSIONS_FLAG,
     DETAILED_USAGE_FLAG,
 )
@@ -47,9 +47,9 @@ class App:
     def __init__(self) -> None:
         """Initializes the App instance."""
 
-        self.arguments: argparse.Namespace = Utility.get_arguments()
+        self.arguments: argparse.Namespace = argparse.Namespace()
         self.cache: Cache = Cache()
-        self.url: str = self.get_url()
+        self.url: str = ""
 
         # Match user argument flags to appropriate method
 
@@ -58,14 +58,19 @@ class App:
         the user's code. Finally, it will then test the user's output against the sample's output.
         """
 
+        if argument_flags in PARSE_FLAGS:
+            self.arguments = Utility.get_arguments()
+
         if argument_flags in TEST_FLAGS:
             self.test_user_code()
         elif argument_flags == LIST_EXTENSIONS_FLAG:
-            Logger.log_extensions()
+            Logger.log_custom_table(*INSTRUCTIONS["extensions"])
         elif argument_flags == DETAILED_USAGE_FLAG:
-            Logger.log_detailed_usage()
+            Logger.log_custom_table(*INSTRUCTIONS["detailed_usage"])
 
     def test_user_code(self):
+        self.url = self.get_url()
+
         extension_type = None
 
         try:

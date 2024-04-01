@@ -34,7 +34,19 @@ ARGUMENT_FLAGS = {
     },
 }
 
+PARSE_FLAGS = {
+    "-t",
+    "-p",
+    "-d",
+    "-t -p -d",
+    "-t -c -d",
+    "-h",
+}
+
 VALID_ARGUMENT_FLAGS = {
+    "-t",
+    "-p",
+    "-d",
     "-t -p -d",
     "-t -c -d",
     "-h",
