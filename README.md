@@ -11,7 +11,7 @@ Quacktools streamlines the code testing and code submission process for Codeforc
 
 ## Snapshots
 <p align="center">
-  <img src="https://raw.githubusercontent.com/DuckyShine004/tetris/main/.snapshots/snap.png" alt="snap.png"/>
+  <img src="https://raw.githubusercontent.com/DuckyShine004/quacktools-codeforces/main/.snapshots/test-user-code-snapshots/test-user-code.png" alt="test-user-code.png"/>
 </p>
 
 ## Getting Started
